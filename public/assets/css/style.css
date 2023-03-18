@@ -1,0 +1,181 @@
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script&family=Golos+Text:wght@400;500;600;700;800;900&display=swap");
+*,
+::before,
+::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  font-size: 62.5%;
+}
+body {
+  font-family: "Golos Text", sans-serif;
+  width: 100%;
+  height: 100%;
+}
+.chat-container {
+  display: grid;
+  grid-template-columns: 15% 85%;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  justify-content: center;
+}
+.chat-sidebar {
+  background-color: #002d62;
+  position: relative;
+}
+.logo-box {
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.logo-box i {
+  color: #fff;
+  font-size: 3.5rem;
+}
+.addons {
+  position: absolute;
+  top: 15%;
+  left: 10%;
+}
+.addons ul {
+  list-style-type: none;
+}
+.addons ul li {
+  display: block;
+}
+.addons ul li:not(:last-child) {
+  margin-bottom: 4rem;
+}
+.addons ul li i {
+  margin-right: 1rem;
+}
+.addons ul li a {
+  text-decoration: none;
+  color: #f0f8ff;
+  font-size: 2rem;
+  font-weight: 400;
+  transition: all 0.3s;
+}
+.addons ul li a:hover {
+  background-color: #002244;
+  padding: 1rem 2rem;
+  transition: all 0.3s;
+}
+.addons ul li #portfolio:hover {
+  background-color: transparent;
+  color: #999;
+  padding: 0rem 0rem;
+}
+.chat-content {
+  background-color: #f0f8ff;
+  position: relative;
+  height: 100%;
+}
+.chat-field {
+  position: fixed;
+  top: 95%;
+  width: 80%;
+  margin: 0 auto;
+}
+.chat-elements {
+  width: 80%;
+  height: 5rem;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 90% 10%;
+  justify-content: center;
+}
+.chat-elements input {
+  width: 100%;
+  margin: 0 auto;
+  outline: none;
+  border: 1px solid #1560bd;
+  background-color: #024;
+  color: #fff;
+  font-family: "Golos Text", sans-serif;
+  padding-left: 2rem;
+}
+.chat-elements input:focus {
+  outline: none;
+  border: 1px solid #1560bd;
+}
+::placeholder {
+  margin-left: 4rem;
+}
+.chat-elements button {
+  background-color: #fff;
+  border: 1px solid #1560bd;
+  color: #1560bd;
+  font-size: 3rem;
+}
+.chat-elements button:hover {
+  background-color: #fff;
+  border: 1px solid #1560bd;
+  color: #1560bd;
+  font-size: 3rem;
+}
+.chat-items {
+  position: relative;
+  overflow-y: auto;
+}
+
+.chat {
+  width: 90%;
+  padding: 2rem 3rem;
+  background-color: #6099df;
+  color: #eee;
+  font-size: 2rem;
+  margin: 3.5rem auto;
+  border-radius: 10px 20px 30px 40px/30px;
+}
+.--user {
+    background-color: #6099df8c;
+  color: #222;
+}
+
+/* Media queries */
+@media screen and (max-width: 768px) {
+  html {
+    font-size: 55%;
+  }
+  .chat-container {
+    grid-template-rows: 15% 85%;
+    grid-template-columns: 100%;
+  }
+  .addons {
+    top: 50%;
+  }
+  .addons ul li {
+    display: inline-block;
+  }
+  .addons ul li:not(:last-child) {
+    margin-right: 1rem;
+  }
+  .chat-field {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 500px) {
+  html {
+    font-size: 50%;
+  }
+  .chat-container {
+    grid-template-rows: 25% 75%;
+    grid-template-columns: 100%;
+  }
+  .addons {
+    top: 50%;
+    left: 0%;
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 370px) {
+  .chat-elements {
+    width: 90%;
+  }
+}
