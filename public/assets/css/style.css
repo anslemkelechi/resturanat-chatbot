@@ -133,10 +133,12 @@ body {
   border-radius: 10px 20px 30px 40px/30px;
 }
 .--user {
-    background-color: #6099df8c;
+  background-color: #6099df8c;
   color: #222;
 }
-
+.--user p {
+  margin-top: 0.8rem;
+}
 /* Media queries */
 @media screen and (max-width: 768px) {
   html {
