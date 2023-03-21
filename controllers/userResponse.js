@@ -31,7 +31,7 @@ const createToken = (order) => {
 exports.checkUser = async (socket) => {
   try {
     //Check If user exists previously
-    const JWT = cookieParser.parse(socket.handshake.headers.cookie).jwt;
+    const JWT = toString(cookieParser.parse(socket.handshake.headers.cookie)).jwt;
     if (!JWT) {
       return [false, "No User"];
     } else {
