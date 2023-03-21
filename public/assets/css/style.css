@@ -128,9 +128,17 @@ body {
   padding: 2rem 3rem;
   background-color: #6099df;
   color: #eee;
-  font-size: 2rem;
+  font-size: 1.7rem;
   margin: 3.5rem auto;
   border-radius: 10px 20px 30px 40px/30px;
+}
+.botmenu {
+  width: 90%;
+  padding: 2rem 3rem;
+  background-color: #6099df;
+  color: #eee;
+  font-size: 1.5rem;
+  margin: -3rem auto;
 }
 .--user {
   background-color: #6099df8c;
