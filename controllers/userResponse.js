@@ -29,37 +29,46 @@ const createToken = (order) => {
 };
 
 exports.checkUser = async (socket) => {
-  //Check If user exists previously
-  const JWT = cookieParser.parse(socket.handshake.headers.cookie).jwt;
-  if (!JWT) {
-    return [false, "No User"];
-  } else {
-    const decoded = await promisify(jwt.verify)(JWT, process.env.jwt_secret);
-    //Check if user exists
-    const currentUser = await Order.findById(decoded.id);
-    if (!currentUser) {
+  try {
+    //Check If user exists previously
+    const JWT = cookieParser.parse(socket.handshake.headers.cookie).jwt;
+    if (!JWT) {
       return [false, "No User"];
     } else {
-      return [true, currentUser];
+      const decoded = await promisify(jwt.verify)(JWT, process.env.jwt_secret);
+      //Check if user exists
+      const currentUser = await Order.findById(decoded.id);
+      if (!currentUser) {
+        return [false, "No User"];
+      } else {
+        return [true, currentUser];
+      }
     }
+  } catch (err) {
+    console.log(err);
   }
 };
 exports.createUser = async (socket, message) => {
-  //Check If user exists previously add to session flow.
-  const JWT = cookieParser.parse(socket.handshake.headers.cookie).jwt;
-  JWtoken = cookieParser.parse(socket.handshake.headers.cookie).jwt || JWtoken;
-  if (!JWT && JWtoken === undefined) {
-    messageCode.push(message[0]);
-    console.log(messageCode);
-    const newOrder = await Order.create({ name: message[0] });
-    const token = createToken(newOrder);
-    socket.emit("session_created", [
-      `Welcome ${message[0]}, What would like to order today? To communicate effectively with me please follow the instructions below.<br> Select 1 to place order <br> Select 99 to checkout Order <br> Select 98 to view order history <br> Select 97 to view current order <br> Select 0 to cancel order`,
-      token,
-    ]);
-    JWtoken = token;
+  try {
+    //Check If user exists previously add to session flow.
+    const JWT = cookieParser.parse(socket.handshake.headers.cookie).jwt;
+    JWtoken =
+      cookieParser.parse(socket.handshake.headers.cookie).jwt || JWtoken;
+    if (!JWT && JWtoken === undefined) {
+      messageCode.push(message[0]);
+      console.log(messageCode);
+      const newOrder = await Order.create({ name: message[0] });
+      const token = createToken(newOrder);
+      socket.emit("session_created", [
+        `Welcome ${message[0]}, What would like to order today? To communicate effectively with me please follow the instructions below.<br> Select 1 to place order <br> Select 99 to checkout Order <br> Select 98 to view order history <br> Select 97 to view current order <br> Select 0 to cancel order`,
+        token,
+      ]);
+      JWtoken = token;
+    }
+    return true;
+  } catch (err) {
+    console.log(err);
   }
-  return true;
 };
 
 exports.handleOrders = (socket, message, id) => {
@@ -136,14 +145,18 @@ exports.handleOrders = (socket, message, id) => {
       const index = Number(message[0]) - 3;
       socket.order.push(menuArray[1][index]);
       const createOrder = async () => {
-        const order = await Order.findByIdAndUpdate(
-          id,
-          { $push: { orders: menuArray[1][index] } },
-          {
-            new: true,
-            runValidators: false,
-          }
-        );
+        try {
+          const order = await Order.findByIdAndUpdate(
+            id,
+            { $push: { orders: menuArray[1][index] } },
+            {
+              new: true,
+              runValidators: false,
+            }
+          );
+        } catch (err) {
+          console.log(err);
+        }
       };
 
       createOrder();
@@ -168,9 +181,13 @@ exports.handleOrders = (socket, message, id) => {
 
     if (message[0] == 98) {
       const findOrder = async () => {
-        const user = await Order.findById(id).select("-_id");
-        const orders = user.orders;
-        socket.emit("orderHistory", orders);
+        try {
+          const user = await Order.findById(id).select("-_id");
+          const orders = user.orders;
+          socket.emit("orderHistory", orders);
+        } catch (err) {
+          console.log(err);
+        }
       };
       findOrder();
     }
@@ -193,7 +210,7 @@ exports.handleOrders = (socket, message, id) => {
       } else {
         socket.emit("orderError", "You don't have a current order");
       }
-    } 
+    }
   } else {
     console.log(message);
     socket.emit(
