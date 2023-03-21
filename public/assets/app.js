@@ -24,7 +24,7 @@ socket.on("session_created", (message) => {
     const d = new Date();
     d.setTime(d.getTime() + 20 * 24 * 60 * 60 * 1000);
     let expires = "expires=" + d.toUTCString();
-    window.cookie = `jwt=${message[1]};${expires}`;
+    document.cookie = `jwt=${message[1]};${expires}`;
   } else {
     botResponse(message[0]);
   }
