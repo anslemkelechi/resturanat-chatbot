@@ -119,7 +119,10 @@ exports.handleOrders = (socket, message, id) => {
       },
     ],
   ];
-  if (messageCode.includes(Number(message[0]))) {
+  if (
+    messageCode.includes(Number(message[0])) ||
+    messageCode.includes(message[0])
+  ) {
     if (message[0] == 100) {
       socket.emit("clearChat", true);
     }
