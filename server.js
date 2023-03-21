@@ -4,7 +4,7 @@ const path = require("path");
 const socketio = require("socket.io");
 const app = express();
 const server = http.createServer(app);
-const io = socketio(server);
+const io = socketio(server, { cookie: true });
 const userController = require("./controllers/userResponse");
 
 //DATABASE CONNECTION
@@ -44,7 +44,6 @@ io.on("connection", async (socket) => {
     console.log("New Connection");
     socket.order = [];
     const check = await userController.checkUser(socket);
-    console.log(check);
     if (check[0]) {
       let tone = `Welcome ${check[1].name}, What would like to order today or do you want me to show you your previous order? To communicate effectively with me please follow the instructions below.<br> Select 1 to place order <br> Select 99 to checkout Order <br> Select 98 to view order history <br> Select 97 to view current order <br> Select 0 to cancel order`;
       socket.emit("welcome", tone);
